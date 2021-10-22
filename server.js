@@ -27,9 +27,11 @@ function departmentTable() {
   db.query("SELECT * FROM departments ORDER BY departments.id", function (err, results) {
     if (err) {
       console.log(err);
+      return;
     }
     console.table(results);
     init();
+    return;
   });
 };
 function rolesTable() {
@@ -38,9 +40,11 @@ function rolesTable() {
   db.query(sql, (err, results) => {
     if (err) {
       console.log(err);
+      return;
     } else {
       console.table(results);
       init();
+      return;
     }
   });
 };
@@ -64,9 +68,11 @@ function employeeAllTable() {
   db.query(sql, (err, results) => {
     if (err) {
       console.log(err);
+      return;
     } else {
       console.table(results);
       init();
+      return;
     }
   });
 };
@@ -88,10 +94,7 @@ function addDepartment() {
           console.log(err);
           return;
         }
-        departmentTable();
-        console.log(
-          `Added ${answers.department_name} to the departments table!`
-        );
+        console.table(results);
         init();
       });
     });
@@ -137,9 +140,9 @@ function addRole() {
           console.log(err);
           return;
         }
-        rolesTable();
-        console.log(`Added ${answers.role_title} to the database!`);
+        console.table(results);
         init();
+        return;
       });
 
   })
@@ -203,8 +206,8 @@ function addEmployee() {
           console.log(err);
           return;
         }
-        employeeAllTable();
-        console.log(`Added ${answers.fName} ${answers.lName} to the database!`);
+        init();
+        return;
       });
     });
     })
@@ -258,20 +261,40 @@ function updateEmployee() {
             if (err) {
               console.log(err);
             }
-            employeeAllTable()
+            init();
+            return;
           });
         });
     });
   });
 };
 
+const titlePage = () => {
+  console.log(`
+
+  /$$$$$$$$                         /$$                                               /$$      /$$                                                                  
+ | $$_____/                        | $$                                              | $$$    /$$$                                                                  
+ | $$       /$$$$$$/$$$$   /$$$$$$ | $$  /$$$$$$  /$$   /$$  /$$$$$$   /$$$$$$       | $$$$  /$$$$  /$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$       
+ | $$$$$   | $$_  $$_  $$ /$$__  $$| $$ /$$__  $$| $$  | $$ /$$__  $$ /$$__  $$      | $$ $$/$$ $$ |____  $$| $$__  $$ |____  $$ /$$__  $$ /$$__  $$ /$$__  $$      
+ | $$__/   | $$ \ $$ \ $$| $$  \ $$| $$| $$  \ $$| $$  | $$| $$$$$$$$| $$$$$$$$      | $$  $$$| $$  /$$$$$$$| $$  \ $$  /$$$$$$$| $$  \ $$| $$$$$$$$| $$  \__/      
+ | $$      | $$ | $$ | $$| $$  | $$| $$| $$  | $$| $$  | $$| $$_____/| $$_____/      | $$\  $ | $$ /$$__  $$| $$  | $$ /$$__  $$| $$  | $$| $$_____/| $$            
+ | $$$$$$$$| $$ | $$ | $$| $$$$$$$/| $$|  $$$$$$/|  $$$$$$$|  $$$$$$$|  $$$$$$$      | $$ \/  | $$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$| $$            
+ |________/|__/ |__/ |__/| $$____/ |__/ \______/  \____  $$ \_______/ \_______/      |__/     |__/ \_______/|__/  |__/ \_______/ \____  $$ \_______/|__/            
+                         | $$                     /$$  | $$                                                                      /$$  \ $$                          
+                         | $$                    |  $$$$$$/                                                                     |  $$$$$$/                          
+                         |__/                     \______/                                                                       \______/                           
+ 
+ `)
+}
+
 const init = () => {
+
   inquirer
     .prompt([
       {
         type: "list",
         name: "begin",
-        message: "What would you like to do?",
+        message: "Choose an option...",
         choices: [
           "View all departments",
           "View all roles",
@@ -302,9 +325,12 @@ const init = () => {
       } else {
         console.log("Have a great day!");
       }
+      return;
     });
 };
 
+titlePage();
 init();
+
 
 app.listen(PORT, () => console.log("Now listening"));
