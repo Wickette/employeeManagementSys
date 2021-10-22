@@ -4,24 +4,24 @@ CREATE DATABASE employee_db;
 USE employee_db;
 
 -- Create Department Table
-CREATE TABLE department (
+CREATE TABLE departments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    department_name VARCHAR(30) NOT NULL
+    name VARCHAR(30) NOT NULL
 );
 
 -- Create Role Table
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    roles_title VARCHAR(30) NOT NULL,
-    roles_salary DECIMAL NOT NULL,
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL NOT NULL,
     department_id INT,
         FOREIGN KEY (department_id)
-        REFERENCES department(id)
+        REFERENCES departments(id)
         ON DELETE SET NULL
 );
 
 -- Create Employee Table
-CREATE TABLE employee (
+CREATE TABLE employees (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
@@ -31,6 +31,6 @@ CREATE TABLE employee (
         REFERENCES roles(id)
         ON DELETE SET NULL,
         FOREIGN KEY (manager_id)
-        REFERENCES employee(id)
+        REFERENCES employees(id)
         ON DELETE SET NULL    
 );
