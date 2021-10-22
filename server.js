@@ -94,13 +94,11 @@ function addDepartment() {
           console.log(err);
           return;
         }
-        console.table(results);
         init();
       });
     });
 };
 function addRole() {
-  const rolesArray = [];
   let sql = `SELECT * from departments`;
   db.query(sql, (err, results) => {
     if (err) {
@@ -140,7 +138,6 @@ function addRole() {
           console.log(err);
           return;
         }
-        console.table(results);
         init();
         return;
       });
@@ -162,7 +159,6 @@ function addEmployee() {
         console.log(err);
         return;
       }
-      console.log(managerResults)
       inquirer.prompt([
       {
         type: "input",
